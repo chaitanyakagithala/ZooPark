@@ -20,13 +20,14 @@
 		<table class="table">
 			<thead>
 				<tr>
+					<th>Serial no</th>
 					<th>Animal</th>
 					<th>Gender</th>
 					<th>Relations</th>
 					<th>Action</th>
 				</tr>
 				<tr>
-					
+					<td><input type="number"   class="form-control " data-bind="value:SLno"></td>
 					<td><input type="text"   class="form-control " data-bind="value:Animal"></td>
 					<td>
                         <select  class="form-control  " data-bind="options : gender ,value : Gender ,optionsCaption:'select gender'"  >
@@ -48,6 +49,7 @@
 	</div>
 
 	<script type="text/template" class="blogs-list-template">
+	<td><span><%= slno %></span></td>
 	<td><span><%= animal %></span></td>
 	<td><span ><%= gender %></span></td>
 	<td><span > It has  <%= relation %></span></td>
