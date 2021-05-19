@@ -10,12 +10,64 @@
 <body>
 	<div class="container text-info">
 		<h1>Zoo Park</h1>
-
 		<table class="table">
 			<thead>
 				<tr>
-					<th>Serial no</th>
+					<th>ZOO ID</th>
+					<th>Enter Zoo Name</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<input type="id" class="form-control id-input" value="ZOORGNO:">
+					</td>
+					<td>
+						<input type="text" class="form-control   author-input">
+					</td>
+					<td>
+						<button class="btn btn-primary  add-zoo"> Add</button>
+					</td>
+
+				</tr>
+			</tbody>
+		</table>
+
+		<table class="table">
+			<tbody class="zoo-list"></tbody>
+			<tbody class="animal-list"></tbody>
+			<tbody class="blogs-list"></tbody>
+
+
+		</table>
+
+	</div>
+
+	<script type="text/template" class="blogs-list-template">
+	<td><span><%= slno %></span></td>
+	<td><span><%= animal %></span></td>
+	<td><span ><%= gender %></span></td>
+	<td><span > It has  <%= relation %></span></td>
+	<td>
+        <button class="btn btn-danger delete-blog">Delete</button></td>
+
+	</script>
+	<script type="text/template" class="blog-list-template">
+		<td>
+			<span>
+				<%= zooName %>
+			</span>	
+		</td>
+		<td><button id="new-animal" class="btn btn-primary ">see animals</button></td>
+	</script>
+	<script src="js/app.js"></script>
+	<script type="text/template" class="animal-template">
+
+		<tr>
+					<th>Register  no</th>
 					<th>Animal</th>
+					<th>Zoo Name</th>
 					<th>Gender</th>
 					<th>Relations</th>
 					<th>Action</th>
@@ -23,6 +75,10 @@
 				<tr>
 					<td><input type="number" class="form-control " data-bind="value:SLno"></td>
 					<td><input type="text" class="form-control " data-bind="value:Animal"></td>
+					<td><select type="text" class="form-control "
+						 data-bind="options : zooname ,value : ZooName ,optionsCaption:'select Zoo'">
+					</select>
+					</td>
 					<td>
 						<select class="form-control  "
 							data-bind="options : gender ,value : Gender ,optionsCaption:'select gender'">
@@ -35,22 +91,8 @@
 						</select>
 					</td>
 
-					<td><button class="btn btn-primary add-blog">Add</button></td>
+					<td><button id="login-button" class="btn btn-primary add-animal">Add</button></td>
 				</tr>
-			</thead>
-			<tbody class="blogs-list"></tbody>
-		</table>
-
-	</div>
-
-	<script type="text/template" class="blogs-list-template">
-	<td><span><%= slno %></span></td>
-	<td><span><%= animal %></span></td>
-	<td><span ><%= gender %></span></td>
-	<td><span > It has  <%= relation %></span></td>
-	<td>
-        <button class="btn btn-danger delete-blog">Delete</button><button class="btn btn-success update-blog" style="display:none">Update</button> <button class="btn btn-danger cancel" style="display:none">Cancel</button></td>
-
 	</script>
 
 </body>
