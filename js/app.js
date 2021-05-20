@@ -12,7 +12,7 @@ require(['jquery', 'knockout', 'underscore', 'backbone', 'backbone-relational'],
     }]
   });
 
-  var ViewDemo = Backbone.View.extend({
+  var addAnimalView= Backbone.View.extend({
     el: $('.animal-list'),
     initialize: function () {
 
@@ -33,6 +33,7 @@ require(['jquery', 'knockout', 'underscore', 'backbone', 'backbone-relational'],
           relation: Relation(),
           ZooName: ZooName()
         });
+        var animals = []
         localStorage.setItem(SLno(), JSON.stringify(newAnimal.toJSON()))
         Animal(null)
         Gender(null)
@@ -54,7 +55,7 @@ require(['jquery', 'knockout', 'underscore', 'backbone', 'backbone-relational'],
     }
 
   });
-  new ViewDemo();
+  new addAnimalView();
 
 
 
@@ -76,18 +77,17 @@ require(['jquery', 'knockout', 'underscore', 'backbone', 'backbone-relational'],
       'click #new-animal': 'addAnimal'
     },
     addAnimal: function () {
-      // alert(this.model.toJSON().zooName)
+      animalCollection.reset();
       for (let i = 0; i < localStorage.length; i++) {
         let key = localStorage.key(i);
 
         if (JSON.parse(localStorage.getItem(key)).ZooName == this.model.toJSON().zooName) {
-
-
-          animalCollection.set(JSON.parse(localStorage.getItem(key)))
+          animalCollection.add(JSON.parse(localStorage.getItem(key)))   
+         
         }
        
       }
-
+         
     },
 
     delete: function () {
