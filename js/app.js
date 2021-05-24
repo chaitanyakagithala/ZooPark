@@ -1,4 +1,4 @@
-require(['jquery', 'knockout', 'underscore', 'backbone', 'backbone-relational'], function ($, ko, _, Backbone, RelationalModel) {
+require(['jquery', 'knockout', 'underscore', 'backbone', 'backbone-relational','datatables'], function ($, ko, _, Backbone, RelationalModel,dataTable) {
   NewZoo = Backbone.RelationalModel.extend({
     relations: [{
       type: Backbone.HasMany,
@@ -78,14 +78,17 @@ require(['jquery', 'knockout', 'underscore', 'backbone', 'backbone-relational'],
     },
     addAnimal: function () {
       animalCollection.reset();
+      var a = 0;
       for (let i = 0; i < localStorage.length; i++) {
         let key = localStorage.key(i);
-
-        if (JSON.parse(localStorage.getItem(key)).ZooName == this.model.toJSON().zooName) {
-          animalCollection.add(JSON.parse(localStorage.getItem(key)))   
          
+        if (JSON.parse(localStorage.getItem(key)).ZooName == this.model.toJSON().zooName) {
+          animalCollection.add(JSON.parse(localStorage.getItem(key))) 
+          a++;  
         }
-       
+      }
+      if(a == 0){
+        alert("no animals in zoo")
       }
          
     },
@@ -213,7 +216,9 @@ require(['jquery', 'knockout', 'underscore', 'backbone', 'backbone-relational'],
       zooCollection.add(newZoo)
       window.location.reload(false);
     })
-
+    
+    $('#table').dataTable();
+    $('#animals').dataTable();
   })
  
 })
