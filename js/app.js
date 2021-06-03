@@ -1,4 +1,5 @@
 require(['jquery', 'knockout', 'underscore', 'backbone', 'backbone-relational','datatables'], function ($, ko, _, Backbone, RelationalModel,dataTable) {
+ // Zoo Model
   NewZoo = Backbone.RelationalModel.extend({
     relations: [{
       type: Backbone.HasMany,
@@ -6,12 +7,13 @@ require(['jquery', 'knockout', 'underscore', 'backbone', 'backbone-relational','
       relatedModel: 'NewAnimal',
       collectionType: 'AnimalCollection',
       reverseRelation: {
-        key: 'livesIn',
+        key: 'ZooName',
+        type: Backbone.Hasone,
         includeInJSON: 'id'
       }
     }]
   });
-
+// view template for adding animal
   var addAnimalView= Backbone.View.extend({
     el: $('.animal-list'),
     initialize: function () {
@@ -63,7 +65,7 @@ require(['jquery', 'knockout', 'underscore', 'backbone', 'backbone-relational','
 
   });
   var zooCollection = new ZooCollection();
-
+// view of all Zoo
   var ZooView = Backbone.View.extend({
     model: new NewZoo(),
     tagName: 'tr',
@@ -90,9 +92,10 @@ require(['jquery', 'knockout', 'underscore', 'backbone', 'backbone-relational','
       if(a == 0){
         alert("no animals in zoo")
       }
+     
          
     },
-
+      
     delete: function () {
       this.model.destroy();
 
@@ -103,7 +106,7 @@ require(['jquery', 'knockout', 'underscore', 'backbone', 'backbone-relational','
 
     }
   });
-
+// Zoo Collection view
   var ZooCollectionView = Backbone.View.extend({
     model: zooCollection,
     el: $('.zoo-list'),
@@ -129,15 +132,15 @@ require(['jquery', 'knockout', 'underscore', 'backbone', 'backbone-relational','
   });
 
 
-
+// Animal model
   var AnimalCollection = Backbone.Collection.extend({
 
   });
 
-
+// Animal Collection
   var animalCollection = new AnimalCollection();
 
-
+// View of  animal
   var AnimalView = Backbone.View.extend({
     model: new NewAnimal(),
     tagName: 'tr',
@@ -146,9 +149,15 @@ require(['jquery', 'knockout', 'underscore', 'backbone', 'backbone-relational','
 
     },
     events: {
-      'click.delete-blog': 'delete'
+      'click #delete-blog': 'delete',
+      'click .get-zooname' : 'GetZooName'
     },
-
+    
+    GetZooName : function(){
+      alert(this.model.toJSON().ZooName )
+      var model= this.model.toJSON()
+      console.log(model.ZooName)
+    },
     delete: function () {
       localStorage.removeItem(this.model.toJSON().slno)
       this.model.destroy();
@@ -159,7 +168,7 @@ require(['jquery', 'knockout', 'underscore', 'backbone', 'backbone-relational','
       return this;
     }
   });
-
+// view of all animals
   var AnimalCollectionView = Backbone.View.extend({
     model: animalCollection,
     el: $('.blogs-list'),
@@ -179,6 +188,7 @@ require(['jquery', 'knockout', 'underscore', 'backbone', 'backbone-relational','
   });
   var animalCollectionView = new AnimalCollectionView();
 
+  // fecthing Zoo's from local storage
    var animalArray = []
   for (let i = 0; i < localStorage.length; i++) {
     let key = localStorage.key(i);
@@ -189,6 +199,7 @@ require(['jquery', 'knockout', 'underscore', 'backbone', 'backbone-relational','
       }
     }
   }
+  // data binding for animal
   var ViewModel = function (slno, animal, gender, relation, zoo) {
     this.SLno = ko.observable(slno)
     this.Animal = ko.observable(animal);
@@ -218,7 +229,7 @@ require(['jquery', 'knockout', 'underscore', 'backbone', 'backbone-relational','
     })
     
     $('#table').dataTable();
-    $('#animals').dataTable();
+   $('#animals').dataTable({searching: false, paging: false, info: false});
   })
  
 })
